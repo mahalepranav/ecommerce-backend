@@ -32,8 +32,14 @@ async function userSignInController(req,res){
 
         const tokenOption = {
             httpOnly : true,
-            secure : true
+            secure : true,
+            sameSite: "None"
         }
+
+        res.setHeader("Access-Control-Allow-Origin", "https://ecommerce-frontend-ten-red.vercel.app");
+        res.setHeader("Access-Control-Allow-Credentials", "true");
+        res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
 
         res.cookie("token",token,tokenOption).status(200).json({
             message : "Login successfully",
@@ -45,12 +51,6 @@ async function userSignInController(req,res){
        }else{
          throw new Error("Please check Password")
        }
-
-
-
-
-
-
 
     }catch(err){
         res.json({

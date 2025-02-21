@@ -8,8 +8,6 @@ async function userSignUpController(req,res){
 
         const user = await userModel.findOne({email})
 
-        console.log("user",user)
-
         if(user){
             throw new Error("Already user exits.")
         }
@@ -24,21 +22,25 @@ async function userSignUpController(req,res){
             throw new Error("Please provide name")
         }
 
-        const salt = bcrypt.genSaltSync(10);
-        const hashPassword = await bcrypt.hashSync(password, salt);
+        // const salt = bcrypt.genSaltSync(10);
+        // const hashPassword = await bcrypt.hashSync(password, salt);
 
-        if(!hashPassword){
-            throw new Error("Something is wrong")
-        }
+        // if(!hashPassword){
+        //     throw new Error("Something is wrong")
+        // }
 
-        const payload = {
-            ...req.body,
-            role : "GENERAL",
-            password : hashPassword
-        }
+        // const payload = {
+        //     ...req.body,
+        //     role : "GENERAL",
+        //     password : hashPassword
+        // }
 
-        const userData = new userModel(payload)
-        const saveUser = await userData.save()
+        // const userData = new userModel(payload)
+        // const saveUser = await userData.save()
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const newUser = new userModel({ email, name, password: hashedPassword, role: "GENERAL" });
+        const saveUser = await newUser.save();
 
         res.status(201).json({
             data : saveUser,

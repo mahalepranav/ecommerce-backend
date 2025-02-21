@@ -11,12 +11,13 @@ const app = express();
 
 // CORS configuration
 app.use(cors({
-    origin: "https://ecommerce-frontend-ten-red.vercel.app",  
+    origin: ["http://localhost:3000", "https://ecommerce-frontend-ten-red.vercel.app"],  
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
 }));
 
+app.options("*", cors());
 
 app.use(express.json());
 app.use(cookieParser());
