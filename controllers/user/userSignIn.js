@@ -33,7 +33,7 @@ async function userSignInController(req,res){
         const tokenOption = {
             httpOnly : true,
             secure : true,
-            sameSite: "Secure"
+            sameSite: "None"
         }
 
         res.setHeader("Access-Control-Allow-Origin", "https://ecommerce-frontend-ten-red.vercel.app");
